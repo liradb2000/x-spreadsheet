@@ -3,7 +3,7 @@
 import { h } from './element';
 import Icon from './icon';
 import { cssPrefix } from '../config';
-import { bind, unbind } from './event';
+import { bind, eventEL, unbind } from './event';
 
 export default class Modal {
   constructor(title, content, width = '600px') {
@@ -20,9 +20,9 @@ export default class Modal {
   show() {
     // dimmer
     this.dimmer = h('div', `${cssPrefix}-dimmer active`);
-    document.body.appendChild(this.dimmer.el);
+    eventEL.document.body.appendChild(this.dimmer.el);
     const { width, height } = this.el.show().box();
-    const { clientHeight, clientWidth } = document.documentElement;
+    const { clientHeight, clientWidth } = eventEL.document.documentElement;
     this.el.offset({
       left: (clientWidth - width) / 2,
       top: (clientHeight - height) / 3,
@@ -37,7 +37,7 @@ export default class Modal {
 
   hide() {
     this.el.hide();
-    document.body.removeChild(this.dimmer.el);
+    eventEL.document.body.removeChild(this.dimmer.el);
     unbind(window, 'keydown', window.xkeydownEsc);
     delete window.xkeydownEsc;
   }

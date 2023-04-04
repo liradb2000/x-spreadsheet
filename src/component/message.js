@@ -2,13 +2,14 @@
 import { h } from './element';
 import Icon from './icon';
 import { cssPrefix } from '../config';
+import { eventEL } from './event';
 
 export function xtoast(title, content) {
   const el = h('div', `${cssPrefix}-toast`);
   const dimmer = h('div', `${cssPrefix}-dimmer active`);
   const remove = () => {
-    document.body.removeChild(el.el);
-    document.body.removeChild(dimmer.el);
+    eventEL.document.body.removeChild(el.el);
+    eventEL.document.body.removeChild(dimmer.el);
   };
 
   el.children(
@@ -18,11 +19,11 @@ export function xtoast(title, content) {
     ),
     h('div', `${cssPrefix}-toast-content`).html(content),
   );
-  document.body.appendChild(el.el);
-  document.body.appendChild(dimmer.el);
+  eventEL.document.body.appendChild(el.el);
+  eventEL.document.body.appendChild(dimmer.el);
   // set offset
   const { width, height } = el.box();
-  const { clientHeight, clientWidth } = document.documentElement;
+  const { clientHeight, clientWidth } = eventEL.document.documentElement;
   el.offset({
     left: (clientWidth - width) / 2,
     top: (clientHeight - height) / 3,

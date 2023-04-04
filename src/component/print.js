@@ -5,6 +5,7 @@ import Button from './button';
 import { Draw } from '../canvas/draw';
 import { renderCell } from './table';
 import { t } from '../locale/locale';
+import { eventEL } from './event';
 
 // resolution: 72 => 595 x 842
 // 150 => 1240 x 1754
@@ -178,10 +179,10 @@ export default class Print {
     const { paper } = this;
     const iframe = h('iframe', '').hide();
     const { el } = iframe;
-    window.document.body.appendChild(el);
+    eventEL.document.body.appendChild(el);
     const { contentWindow } = el;
     const idoc = contentWindow.document;
-    const style = document.createElement('style');
+    const style = eventEL.document.createElement('style');
     style.innerHTML = `
       @page { size: ${paper.width}px ${paper.height}px; };
       canvas {
